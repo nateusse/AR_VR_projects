@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Three.js  </title>
+    <style> 
+        body { 
+            width: 100vw; 
+            height: 100vh; 
+            margin: 0; 
+            background: radial-gradient(#1E1E1E, #000000); 
+            overflow: hidden; 
+        } 
+    </style> 
+</head>
+<body>
+     
+    <script type="module"> 
+        import * as THREE from './build/three.module.js'; 
+        import { OrbitControls } from './js/OrbitControls.js'; 
+        import { FlakesTexture } from './js/FlakesTexture.js'; 
+        import { RGBELoader } from './js/RGBELoader.js'
+
+        let scene, camera, renderer, controls, pointlight;
+
+        function init() { 
+                scene = new THREE.Scene(); 
+ 
+                renderer = new THREE.WebGLRenderer({alpha: true, antialias: true}); 
+                renderer.setSize(window.innerWidth, window.innerHeight); 
+                document.body.appendChild(renderer.domElement); 
+ 
+                renderer.outputEncoding = THREE.sRGBEncoding; 
+                renderer.toneMapping = THREE.ACESFilmicToneMapping; 
+                renderer.toneMappingExposure = 1.25; 
+ 
+                camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000); 
+                camera.position.set(0, 0, 500); 
+                controls = new OrbitControls(camera, renderer.domElement); 
+
+                //rotacion constante
+                controls.autoRotate = true; 
+                controls.autoRotateSpeed = 4.0; 
+                controls.enableDamping = true; 
+ 
+                pointlight = new THREE.PointLight(0xffffff, 1); 
+                pointlight.position.set(200, 200, 2000); 
+                scene.add(pointlight); 
+            
+                let envmaploader = new THREE.PMREMGenerator(renderer);
+
+                new RGBELoader().setPath('textures/').load('reflectionfile.hdr', function(hdrmap) { 
+                let envmap = envmaploader.fromCubemap(hdrmap);
+                let texture = new THREE.CanvasTexture(new FlakesTexture()); 
+                texture.wrapS = THREE.RepeatWrapping; 
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.x = 10; 
+                texture.repeat.y = 6; 
+
+            const sphereMaterial = { 
+                        color: 0xca18b7, 
+                        clearcoatRoughness: 0.1, 
+                        clearcoat: 1.0, 
+                        roughness: 0.5, 
+                        metalness: 0.9, 
+                        normalMap: texture, 
+                        normalScale: new THREE.Vector2(0.15, 0.15), 
+                        envMap: envmap.texture 
+                    }; 
+ 
+                    let sphereGeo = new THREE.SphereGeometry(100, 64, 64); 
+                    let sphereMat = new THREE.MeshPhysicalMaterial(sphereMaterial); 
+                    let sphereMesh = new THREE.Mesh(sphereGeo, sphereMat); 
+                    scene.add(sphereMesh); 
+ 
+                    animate(); 
+                }) 
+ 
+            } 
+ 
+            function animate() { 
+                controls.update(); 
+                renderer.render(scene, camera); 
+                requestAnimationFrame(animate); 
+            } 
+            init(); 
+        </script> 
+    </body> 
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
