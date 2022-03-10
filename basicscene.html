@@ -16,7 +16,7 @@
         var scene = new THREE.Scene(); 
 
         //new camera object stored in the variable camera and it is a perspective camera
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000); 
+        var camera = new THREE.PerspectiveCamera(80, window.innerWidth/window.innerHeight, 9, 0); 
         var renderer = new THREE.WebGLRenderer(); 
         renderer.setSize(window.innerWidth, window.innerHeight); 
         document.body.appendChild(renderer.domElement); 
@@ -24,10 +24,19 @@
         var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); 
         var cube = new THREE.Mesh(geometry, material); 
         scene.add(cube); 
-        cube.rotation.y = 40; 
-        camera.position.z = 5; 
+        cube.rotation.y = 1; 
+        camera.position.z = 2; 
  
-        renderer.render(scene, camera); 
+        
+        //animacion
+        var animate = function(){
+          cube.rotation.x += 0.001;
+          cube.rotation.y += 0.00005;
+          cube.rotation.z += 0.005;
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate)
+        }
+        animate();
     </script> 
   </body> 
 </html>
